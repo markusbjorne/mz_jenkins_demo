@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Prepare') {
             steps {
-                sh "echo setup..."
+                echo "Prepare ..."
                 sh "uname -a"
                 sh "ls ${env.MZ_HOME}"
                 sh "pwd"
@@ -19,6 +19,8 @@ pipeline {
                 sh "java -version"
                 sh "${env.MZ_HOME}/bin/mzsh status platform"
                 sh "${env.MZ_HOME}/bin/mzsh status ec1"
+                echo "Importing config ..."
+                sh "${env.MZ_HOME}/bin/mzsh vcimport -d config"
             }
         }
         stage('Test') {
