@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         MZ_HOME='/Users/markush/mz/mz-main/mediationzone/mzhomes/mz'
-        MZ_CREDENTIALS='mzadmin:dr'
+        MZ_CREDENTIALS='mzadmin/dr'
         JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home'
     }
 
