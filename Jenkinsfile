@@ -7,18 +7,18 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Prepare') {
             steps {
                 sh "echo setup..."
                 sh "uname -a"
-                sh "ls /Users/markush/mz/mz-main/mediationzone/"
+                sh "ls ${env.MZ_HOME}"
                 sh "pwd"
                 sh "ls"
                 sh "ls /"
                 sh "which java"
                 sh "java -version"
-                sh "/Users/markush/mz/mz-main/mediationzone/mzhomes/mz/bin/mzsh status platform"
-                sh "/Users/markush/mz/mz-main/mediationzone/mzhomes/mz/bin/mzsh status ec1"
+                sh "${env.MZ_HOME}/bin/mzsh status platform"
+                sh "${env.MZ_HOME}/bin/mzsh status ec1"
             }
         }
         stage('Test') {
