@@ -22,6 +22,8 @@ pipeline {
                 sh "${env.MZ_HOME}/bin/mzsh status ec1"
                 echo "Importing config ..."
                 sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} vcimport -d config"
+                echo "Start realtime workflows "                
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.*"
             }
         }
         stage('Test') {
@@ -29,9 +31,9 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage('Deploy') {
+        stage('Teardown') {
             steps {
-                echo 'Deploying....'
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.USAGE_REST_SERVER.workflow_1"
             }
         }
     }

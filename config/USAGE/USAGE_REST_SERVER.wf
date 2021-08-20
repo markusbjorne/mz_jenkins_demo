@@ -116,13 +116,6 @@ auto.endpoint.uri.not.found.response.enabled=true
 
     REST.Cycle udr = (REST.Cycle) input;
     
-    //for (string reqheaderkeys: mapKeys(udr.request.headerFields)) {
-    //    for (string reqheaderVals: mapGet(udr.request.headerFields, reqheaderkeys)) {
-    //        debug("reqheaderkeys: " + reqheaderkeys + ", reqheaderVals: " + reqheaderVals);
-    //    }
-    //}
-    //
-    //debug("[YAY] reqUri: '"+ udr.request.requestedUri + "'");
     REST.Request req = udr.request;
     
     if (udr.error == null) {
@@ -134,14 +127,17 @@ auto.endpoint.uri.not.found.response.enabled=true
         bytearray bodyBA;
         
         
+        list<int> numbers = listCreate(int, 0, 1, 2, 3, 4);
         
-        strToBA(bodyBA,
-            "<html><h1>We give you, Rest Server Agent!</h1><br>"
-            + "<p>Request body:</p><br><p>"
-            + reqBody + "</p></html>");
+        //map<string, list<int> m;
+        map<string, any> myMap = mapCreate( string, any);
+        
+        mapSet(myMap, "numbers", numbers);
+        
+        strToBA(bodyBA,jsonEncodeMap(myMap));
         
         map< string,list<string> > headerFields = mapCreate(string, list<string> );
-        mapSet(headerFields, "content-type", listCreate(string, "text/html", "test") );
+        mapSet(headerFields, "content-type", listCreate(string, "application/json", "test") );
         mapSet(headerFields, "Accept-Charset", listCreate(string, "utf-8") );
         
         udr.response = udrCreate(REST.Response);
@@ -151,13 +147,8 @@ auto.endpoint.uri.not.found.response.enabled=true
         udr.response.headerFields = headerFields;
     }
     
-    //if ((ctxID % 10) == 0) {
-    //  //simulate timeout by no returning cycle udr
-    //} else {
-    //    //simulating some process taking 10ms complete
-    //    sleep(10);
+
     udrRoute(udr);
-    //}
     
     debug(udr);
     
