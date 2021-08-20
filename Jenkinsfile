@@ -28,7 +28,11 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                dir('test/demo-test') {
+                    sh 'mvn clean compile test'
+                    junit './target/surefire-reports/TEST-com.digitalroute.demo.HttpTest.xml'
+                }
+                echo 'Testing completed'
             }
         }
         stage('Teardown') {
