@@ -30,7 +30,7 @@ pipeline {
             steps {
                 dir('test/demo-test') {
                     sh 'mvn clean compile test'
-                    junit './target/surefire-reports/TEST-com.digitalroute.demo.HttpTest.xml'
+                    junit 'target/surefire-reports/*.xml'
                 }
                 echo 'Testing completed'
             }
