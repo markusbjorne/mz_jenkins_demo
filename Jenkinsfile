@@ -16,11 +16,11 @@ pipeline {
                 sh "${env.MZ_HOME}/bin/mzsh status platform"
                 sh "${env.MZ_HOME}/bin/mzsh status ec1"
                 echo "Stop workflows ..."
-                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.*; echo \$?"
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.* || true"
                 echo "Importing config ..."
                 sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} vcimport -d config"
                 echo "Start realtime workflows "                
-                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.*; echo \$?"
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.* || true"
             }
         }
         stage('Test') {
@@ -36,7 +36,7 @@ pipeline {
         stage('Teardown') {
             steps {
                 echo "Stop workflows ..."
-                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.*; echo \$?"
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.* || true"
             }
         }
     }
