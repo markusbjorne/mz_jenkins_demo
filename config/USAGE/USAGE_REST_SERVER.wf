@@ -115,7 +115,6 @@ auto.endpoint.uri.not.found.response.enabled=true
                                             <Value><![CDATA[consume {
 
     REST.Cycle udr = (REST.Cycle) input;
-    
     REST.Request req = udr.request;
     
     if (udr.error == null) {
@@ -125,7 +124,6 @@ auto.endpoint.uri.not.found.response.enabled=true
         }
         
         bytearray bodyBA;
-        
         
         list<int> numbers = listCreate(int, 0, 1, 2, 3, 4);
         
@@ -137,7 +135,7 @@ auto.endpoint.uri.not.found.response.enabled=true
         strToBA(bodyBA,jsonEncodeMap(myMap));
         
         map< string,list<string> > headerFields = mapCreate(string, list<string> );
-        mapSet(headerFields, "content-type", listCreate(string, "application/json", "test") );
+        mapSet(headerFields, "content-type", listCreate(string, "application/json") );
         mapSet(headerFields, "Accept-Charset", listCreate(string, "utf-8") );
         
         udr.response = udrCreate(REST.Response);
