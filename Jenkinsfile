@@ -11,19 +11,16 @@ pipeline {
         stage('Prepare') {
             steps {
                 echo "Prepare ..."
-                sh "uname -a"
-                sh "ls ${env.MZ_HOME}"
-                sh "pwd"
-                sh "ls"
-                sh "ls /"
-                sh "which java"
                 sh "java -version"
+                echo "Check MZ status ..."
                 sh "${env.MZ_HOME}/bin/mzsh status platform"
                 sh "${env.MZ_HOME}/bin/mzsh status ec1"
+                echo "Stop workflows ..."
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.*; echo $?"
                 echo "Importing config ..."
                 sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} vcimport -d config"
                 echo "Start realtime workflows "                
-                //sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.*; echo $?"
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.*; echo $?"
             }
         }
         stage('Test') {
@@ -38,7 +35,8 @@ pipeline {
         }
         stage('Teardown') {
             steps {
-                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.USAGE_REST_SERVER.workflow_1"
+                echo "Stop workflows ..."
+                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstop USAGE.*; echo $?"
             }
         }
     }
