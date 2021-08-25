@@ -23,13 +23,14 @@ pipeline {
                 echo "Importing config ..."
                 sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} vcimport -d config"
                 echo "Start realtime workflows "                
-                sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.*"
+                //sh "${env.MZ_HOME}/bin/mzsh ${env.MZ_CREDENTIALS} wfstart USAGE.*; echo $?"
             }
         }
         stage('Test') {
             steps {
                 dir('test/demo-test') {
                     sh 'mvn clean compile test'
+
                     junit 'target/surefire-reports/*.xml'
                 }
                 echo 'Testing completed'
