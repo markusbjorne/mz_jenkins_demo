@@ -125,7 +125,7 @@ auto.endpoint.uri.not.found.response.enabled=true
         
         bytearray bodyBA;
         
-        list<int> numbers = listCreate(int, 1, 2, 3, 4);
+        list<int> numbers = listCreate(int,0, 1, 2, 3, 4);
         
         //map<string, list<int> m;
         map<string, any> myMap = mapCreate( string, any);
